@@ -72,13 +72,13 @@ export default {
             .then(function (response){
                 console.log(response);
                 
-                if(response.data.status == 200){
-                    localStorage.setItem('token', response.data.token);
-                    self.$router.push({ name: "inicio" }); 
+                if(response.data.status == 200){ // se o status for 200 
+                    localStorage.setItem('token', response.data.token); // salva o token no localstorage
+                    self.$router.push({ name: "inicio" }); //redireciona para a página inicial
                 }
                 else{
-                    alert("Erro de Login! Senha ou Email inválidos");
-                    self.$router.push({ name: "login" });
+                    alert("Erro de Login! Senha ou Email inválidos"); // se o status nao for 200 
+                    self.$router.push({ name: "login" }); //Mantém para a página de login
                 }
             })
             .catch(function (error) {

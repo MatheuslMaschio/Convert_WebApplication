@@ -77,29 +77,32 @@ export default {
                     this.gerarRequest();
                 }
             }
+            else{//se ñ existir token 
+                this.$router.push({ name: "login" });  //redireciona para a página de login
+            }
         },
 
         cadastrarAtividade(){
-            const webApiUrl = "http://localhost/projetos/PHP/api/atividade/create.php"
-            const self = this
+            const webApiUrl = "http://localhost/projetos/PHP/api/atividade/create.php" //link da api
+            const self = this //definindo self = this para usar dentro do axios
 
             const options = {
-                method: 'POST',
-                url: webApiUrl,
+                method: 'POST', //definindo o método
+                url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Origin" : "*", //headers de acesso
                 },
                 data: {
-                    descricao: this.descricao,
+                    descricao: this.descricao, //passando para o data os valores do formulario 
                     tipo: this.tipo,
                     status: this.status,
                 }
             };
             // --> AXIOS <--
-            axios.request(options)
+            axios.request(options) //enviando a request 
             .then(function (response){
                 console.log(response);
-                self.limpaInput();
+                self.limpaInput(); //limpando os inputs
             
 
             })
@@ -109,14 +112,14 @@ export default {
         },
 
         consultarApi() {
-            const webApiUrl = "http://localhost/projetos/PHP/api/tipo_atividade/read.php"; 
-            const self = this;
+            const webApiUrl = "http://localhost/projetos/PHP/api/tipo_atividade/read.php";  //link da api
+            const self = this; //definindo self = this para usar dentro do axios
 
             axios({
-                method: "get", 
-                url: webApiUrl, 
+                method: "get", //definindo o método
+                url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*" 
+                    "Access-Control-Allow-Origin" : "*" // headers de acesso
                 },
             }).then((response) => (self.posts = response.data)); 
         },

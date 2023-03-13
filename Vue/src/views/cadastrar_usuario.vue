@@ -50,17 +50,17 @@ export default {
 
     methods: {
         cadastrarUsuario(){
-            const webApiUrl = "http://localhost/projetos/PHP/api/users/create_user.php";
-            const self = this
+            const webApiUrl = "http://localhost/projetos/PHP/api/users/create_user.php"; //link da api
+            const self = this  //definindo self = this para usar dentro do axios
 
             const options = {
-                method: 'POST',
-                url: webApiUrl,
+                method: 'POST', //definindo método
+                url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Origin" : "*", //headers de acesso
                 },
-                data: {
-                    nome : this.nome,
+                data: { //passando para o data os dados do formulario
+                    nome : this.nome, 
                     email: this.email,
                     senha: this.senha,
                 }

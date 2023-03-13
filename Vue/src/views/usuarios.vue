@@ -78,10 +78,40 @@ export default {
     },
 
     created(){ 
-        this.criarTabela(); //chamamos o criarTabela no created para que quando iniciarmos a aplicação o vue já chame a função.
+        this.verificatoken(); //chamamos o criarTabela no created para que quando iniciarmos a aplicação o vue já chame a função.
     },
 
     methods: {
+        verificatoken(){
+            const token = localStorage.getItem("token");
+            if(token) {
+                const partesDoToken = token.split("."); //dividino o token em partes 
+                
+                const getPayload = partesDoToken[1]; //pegando o payload aonde está a data de expiração
+                
+                const payload = JSON.parse(window.atob(getPayload)); //decodificando o payload
+            
+                const dataExpiracao = payload.exp * 1000; //transformando em milisegundos
+
+                let horaAtual = Date.now(); //pegando a hora atual
+
+                horaAtual = horaAtual - 3 * 60 * 60 * 1000; //arrumando a hora atual por causa do fuso
+                
+
+                if(dataExpiracao < horaAtual) { //se a data de expiração for menor que a hora atual
+                    this.$router.push({ name: "login" });  //redireciona para a página de login
+                }
+                else {
+                    console.log("ok caiu aqui, ainda tem tempo até expirar o token");
+                    this.criarTabela();
+                }
+            }
+            else{//se ñ existir token 
+                this.$router.push({ name: "login" });  //redireciona para a página de login
+            }
+        },
+
+
         //Trás os dados da api
         consultarApi() {
             //definimos algumas variaveis para ficar mais facil
@@ -105,15 +135,15 @@ export default {
 
 
         preparaEdit(id){
-            this.isOpen = true;
+            this.isOpen = true; //definindo true para o modal abrir 
 
-            const self = this;
+            const self = this; //definindo self = this para usar dentro do axios
             const options = {
-            method: 'GET',
-            url: "http://localhost/projetos/PHP/api/users/read_single.php",
-            params:{id:id},
+            method: 'GET', //definindo o metodo get
+            url: "http://localhost/projetos/PHP/api/users/read_single.php", //link da api
+            params:{id:id}, //passando o id
             headers: {
-                "Access-Control-Allow-Origin" : "*" 
+                "Access-Control-Allow-Origin" : "*" //headers de acesso
             },
             data: {}
             };
@@ -130,14 +160,14 @@ export default {
         },
 
         atualizarUsuario(){
-            const self = this;
+            const self = this; //definindo self = this para usar dentro do axios
             const options = {
-                method: 'PUT',
-                url: "http://localhost//projetos/PHP/api/users/update.php",
+                method: 'PUT', //definindo o metodo put
+                url: "http://localhost//projetos/PHP/api/users/update.php", //link da api
                 headers: {
-                "Access-Control-Allow-Origin" : "*" 
+                "Access-Control-Allow-Origin" : "*" //headers de acesso
                 },
-                data: {
+                data: { //passando para o data o valor dos v-model dos inputs
                     id: this.id,
                     nome: this.nome,
                     email: this.email,
@@ -147,8 +177,8 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response.data);
-                self.criarTabela();
-                self.limpaInput();
+                self.criarTabela(); //gerando a tabela novamente
+                self.limpaInput(); //limpa os inputs
             }).catch(function (error) {
                 console.log(error);  
             })
