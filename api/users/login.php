@@ -100,8 +100,8 @@
     else{   
         //http_response_code(403); -> tive problema de cors ver com o bruno 
         $usuario_arr = array(
-            "status" => '403',
-            "mensagem" => "Inválido usuário ou senha!",
+            "Status" => '403',
+            "Mensagem" => "Inválido usuário ou senha!",
         );
         
     }

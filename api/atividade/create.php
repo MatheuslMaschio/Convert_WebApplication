@@ -16,23 +16,33 @@
     //Instanciando atividade object
     $atividade = new Atividade($db);
 
-    //get raw enviando para data
+    //Obtém os dados enviados
     $data = json_decode(file_get_contents("php://input"));
 
     $atividade->tipo = $data->tipo;
     $atividade->descricao = $data->descricao;
     $atividade->status = $data->status;
 
-    //Criando Atividade
-    if($atividade->create()) {
-        
-
+    if(
+        !empty($atividade->tipo) &&
+        !empty($atividade->descricao) &&
+        !empty($atividade->status) &&
+        $atividade->create()
+    ){
+        //resposta
         echo json_encode(
-            array('message' => 'Atividade Criado com sucesso!')
+            array(
+                "Status" => "200",
+                "Mensagem" => "Atividade criada com sucesso"
+            )
         );
-    } else {
+    }
+    else{
         echo json_encode(
-            array('message' => 'Atividade Não  foi Criada')
+            array(
+                "Status" => "400",
+                "Mensagem" => "Não foi possível criar atividade"
+            )
         );
     }
 ?>

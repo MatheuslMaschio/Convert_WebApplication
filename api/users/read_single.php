@@ -15,22 +15,22 @@
     //Instanciando usuario object
     $usuario = new Usuario($db);
 
-    //GET ID
+    //pegando o id 
     $usuario->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    //GET post
+    //executando método 
     $usuario->read_single();
 
-    //Create array
-    $at_arr = array();
-    $at_arr ['data'] = array();
+    //Criando array
+    $user_arr = array();
+    $user_arr ['data'] = array();
     
-    $at_arr = array(
+    $user_arr = array(
         'id' => $usuario->id,
         'nome' => $usuario->nome,
         'email' => $usuario->email,
     );
 
     //JSON
-    print_r(json_encode($at_arr));
+    print_r(json_encode($user_arr));
 ?>

@@ -1,4 +1,5 @@
 <template>
+  <body at-not-responsive="true"> </body>
   <router-view/>
 </template>
 <script>

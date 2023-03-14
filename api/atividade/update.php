@@ -16,7 +16,7 @@
     //Instanciando atividade object
     $atividade = new Atividade($db);
 
-    //get raw atividadeed data
+    //Obtém os dados enviados
     $data = json_decode(file_get_contents("php://input"));
 
     //Setando o ID para Update
@@ -26,16 +26,14 @@
     $atividade->descricao = $data->descricao;
     $atividade->status = $data->status;
 
-    
-
     //Atualizando atividade
     if($atividade->update()) {
         echo json_encode(
-            array('message' => 'atividade Atualizado com sucesso!')
+            array('Mensagem' => 'Atividade Atualizada com sucesso!')
         );
     } else {
         echo json_encode(
-            array('message' => 'atividade Não foi Atualizado!')
+            array('Mensagem' => 'Atividade Não foi Atualizada!')
         );
     }
 ?>

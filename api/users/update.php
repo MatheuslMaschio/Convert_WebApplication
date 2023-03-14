@@ -16,7 +16,7 @@
     //Instanciando atividade object
     $usuario = new Usuario($db);
 
-    //get raw usuarioed data
+    //Obtém os dados enviados
     $data = json_decode(file_get_contents("php://input"));
 
     //Setando o ID para Update
@@ -30,7 +30,8 @@
         echo json_encode(
             array('message' => 'usuario Atualizado com sucesso!')
         );
-    } else {
+    } 
+    else{
         echo json_encode(
             array('message' => 'usuario Não foi Atualizado!')
         );

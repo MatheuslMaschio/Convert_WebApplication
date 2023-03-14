@@ -184,6 +184,28 @@ export default {
             })
         },
 
+
+        deleteUsuario(id){
+            const self = this;
+            const options = {
+                method: 'DELETE',
+                url: 'http://localhost/projetos/PHP/api/users/delete.php',
+                headers: {
+                    "Access-Control-Allow-Origin" : "*" 
+                },
+                data: {
+                    id: id,
+                }
+            };
+            //--> AXIOS <-- 
+            axios.request(options).then(function (response){
+                self.criarTabela();
+                console.log(response.data);
+            }).catch(function (error){
+                console.error(error);
+            });
+        },
+
         limpaInput(){
             this.nome = "";
             this.email = "";

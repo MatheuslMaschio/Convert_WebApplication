@@ -74,7 +74,6 @@ export default {
           this.$router.push({ name: "login" });  //redireciona para a página de login
         }
         else {
-          console.log("ok caiu aqui");
           this.criarTabela(); //chamamos o criarTabela no created para que quando iniciarmos a aplicação o vue já chame a função.
         }
       }

@@ -13,7 +13,7 @@
             $this->conn = $db;
         }
 
-        //Get tipo de atividade
+        //Lendo todos os tipos de atividade
         public function read(){
             //criando consulta
             $query = 'SELECT
@@ -30,6 +30,7 @@
             return $stmt;
         }
         
+        //Lendo apenas um tipo de atividade
         public function read_single(){
             // Create query
             $query = 'SELECT
@@ -81,7 +82,7 @@
             return false;
         }
 
-        // Atualizando Post
+        // Atualizando tipo de atividade 
         public function update(){
             // Criando Consulta
             $query = 'UPDATE ' . $this->table . ' SET descricao = :descricao WHERE id = :id';
@@ -131,17 +132,6 @@
             printf("Error: %s.\n", $stmt->error);
 
             return false;
-        }
-
-        public function enviandoForm($descricao){
-            //criando consulta
-            $query = 'INSERT INTO ' . $this->table . ' SET  descricao = :descricao';
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':descricao', $descricao);
-            
-            if($stmt->execute()){
-                return true;
-            }
         }
     }
 ?>

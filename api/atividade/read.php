@@ -46,7 +46,7 @@ if($num > 0) {
 
 } else {
     //Se não há categorias
-    echo json_encode(array('message' => 'Não há post'));
+    echo json_encode(array('Mensagem' => 'Não existe nenhuma atividade.'));
     
 }
 ?>

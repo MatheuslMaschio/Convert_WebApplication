@@ -5,7 +5,7 @@
         private $conn;
         private $table_name = "usuarios";
 
-        //Propriedades do Usuario
+        //Propriedades do Usuario//colunas do banco
         public $id;
         public $nome;
         public $email;
@@ -16,6 +16,7 @@
             $this->conn = $db;
         }
 
+        //lendo todos os usuários
         function read(){
             //Criando consulta
             $query = 'SELECT
@@ -33,6 +34,7 @@
             return $stmt;
         }
 
+        //lendo apenas um usuário
         public function read_single(){
             // Create query
             $query = 'SELECT
@@ -89,6 +91,7 @@
             return false;
         }
         
+        //logando usuario 
         function login(){
             //fazendo a consulta 
             $query = 'SELECT id, nome, email, senha
@@ -117,6 +120,7 @@
             
         }
 
+        //Atualizando o usuário
         function update(){
             // Criando Consulta
             $query = 'UPDATE ' . $this->table_name . ' SET nome = :nome, email = :email WHERE id = :id';
@@ -145,6 +149,7 @@
             return false;
         }
 
+        //Criando token
         function create_token($token, $userId){ //ajuda do rodolfo 
             //Implementamos uma consulta para procurar o id do usuario na tabela
             $sql = "SELECT id_usuario FROM tokens WHERE id_usuario = :id";
@@ -172,6 +177,32 @@
 
                 $query->execute();  
             }
+        }
+
+        //deletando usuario
+        public function delete(){
+            //criando consulta
+            $query = 'DELETE FROM '. $this->table_name . ' WHERE id = :id';
+
+            //Prepara envio
+            $stmt = $this->conn->prepare($query);
+
+            //Limpando dados
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
+
+            //Conectando dados
+            $stmt->bindParam(':id', $this->id);
+            
+            //Excutando
+            if($stmt->execute()) {
+                return true;
+            }
+
+            //Print erro se algo ruim acontecer
+            printf("Error: %s.\n", $stmt->error);
+
+            return false;
         }
     }
 ?>

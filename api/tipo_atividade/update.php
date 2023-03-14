@@ -15,7 +15,7 @@
     //Instanciando atividade object
     $tipoAtividade = new tipoAtividade($db);
 
-    //get raw atividadeed data
+    //Obtém os dados enviados
     $data = json_decode(file_get_contents("php://input"));
 
     //Setando o ID para Update
@@ -25,10 +25,11 @@
     //Atualizando atividade
     if($tipoAtividade->update()) {
         echo json_encode(
-            array('message' => 'Tipo de atividade Atualizada com sucesso!')
+            array('Mensagem' => 'Tipo de atividade Atualizada com sucesso!')
         );
     } else {
         echo json_encode(
-            array('message' => 'Tipo de atividade Não foi Atualizada!')
+            array('Mensagem' => 'Tipo de atividade Não foi Atualizada!')
         );
     }
+?>

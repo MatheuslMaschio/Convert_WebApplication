@@ -1,6 +1,7 @@
 <?php
+    //Classe da atividade
     class Atividade {
-        //Banco de dados Stuff 
+        //Banco de dados 
         private $conn;
         private $table = "atividade";
 
@@ -16,7 +17,7 @@
             $this->conn = $db;
         }
 
-        //Get Atividades
+        //Lendo todas as Atividades
         public function read() {
             //Criando consulta
             $query = 'SELECT
@@ -25,7 +26,7 @@
             tipoatividade.descricao as tipo,
             atividade.descricao,
             atividade.status
-            FROM atividade INNER JOIN tipoatividade ON atividade.tipo=tipoatividade.id';
+            FROM atividade INNER JOIN tipoatividade ON atividade.tipo=tipoatividade.id'; //Inner join para pegar o tipo de atividade 
 
             //Prepara envio
             $stmt = $this->conn->prepare($query);
@@ -36,6 +37,7 @@
             return $stmt;
         }
 
+        //Lendo apenas uma atividade
         public function read_single(){
             // Criando consulta
             $query = 'SELECT
@@ -45,9 +47,9 @@
             atividade.descricao,
             atividade.status
             FROM
-            atividade INNER JOIN tipoatividade ON atividade.tipo=tipoatividade.id
+            atividade INNER JOIN tipoatividade ON atividade.tipo=tipoatividade.id 
             WHERE atividade.id = ?
-            LIMIT 0,1';
+            LIMIT 0,1'; //Inner join para pegar o tipo de atividade 
         
             //fazendo conexão com o banco 
             $stmt = $this->conn->prepare($query);
@@ -153,27 +155,6 @@
             printf("Error: %s.\n", $stmt->error);
 
             return false;
-        }
-
-        public function getTipos(){
-            $query = "SELECT * FROM tipoatividade"; //preparando consulta
-            $stmt = $this->conn->query($query); //Método
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        
-
-        public function enviandoForm($descricao, $tipo, $status){
-            //criando consulta
-            $query = 'INSERT INTO ' . $this->table . ' SET  descricao = :descricao, tipo = :tipo, status = :status';
-
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':descricao', $descricao);
-            $stmt->bindValue(':tipo', $tipo);
-            $stmt->bindValue(':status', $status);
-            
-            if($stmt->execute()){
-                return true;
-            }
         }
     }
 ?>

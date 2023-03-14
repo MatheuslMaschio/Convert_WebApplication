@@ -1,6 +1,5 @@
 <?php 
-    //iniciando sessão 
-    
+    //Classe do Banco de dados
     class Database {
     // Parametros do Banco de Dados
     private $host = 'localhost'; //servidor

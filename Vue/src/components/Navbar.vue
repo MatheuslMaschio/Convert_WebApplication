@@ -31,7 +31,7 @@
                 </ul>
             </div>
             <div>
-                <button type="button" class="at-button " at-bg="primary">Logout</button>
+                <button type="button" class="at-button " at-bg="primary" @click="logout()">Logout</button>
             </div>
         </div>
     </nav>
@@ -41,6 +41,24 @@
 <script>
 export default {
     name: 'Navbar',
+    data() {
+        return {
+            
+        };
+    },
+
+    created(){
+
+    },
+    methods: {
+        logout(){
+            const token = localStorage.getItem("token");
+            if (token) { //se token for nulo
+                localStorage.removeItem("token");
+                this.$router.push({ name: "login" });  //redireciona para a página de login
+            }
+        }
+    }
 }
 </script>
 

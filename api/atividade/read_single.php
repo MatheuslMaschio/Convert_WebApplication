@@ -15,10 +15,10 @@
     //Instanciando atividade object
     $atividade = new Atividade($db);
 
-    //GET ID
+    //pegando o id 
     $atividade->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    //GET post
+   //executando método 
     $atividade->read_single();
 
     //Create array

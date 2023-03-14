@@ -25,7 +25,6 @@
     //Verificar se há algum tipo de atividade
     if($num > 0) {
         //tipo de atividade Array
-
         $tpA_arr = array();
         $tpA_arr ['data'] = array();
 
@@ -46,6 +45,11 @@
 
     } else {
         //Se não há categorias
-        echo json_encode(array('message' => 'Não há post'));
+        echo json_encode(
+            array(
+                'Mensagem' => 'Não existe nenhuma tipo de atividade.'
+            )
+        );
         
     }
+?>
