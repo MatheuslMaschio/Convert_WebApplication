@@ -73,17 +73,35 @@ export default {
                 console.log(response);
                 
                 if(response.data.status == 200){ // se o status for 200 
+                    self.alertSucess();
                     localStorage.setItem('token', response.data.token); // salva o token no localstorage
-                    self.$router.push({ name: "inicio" }); //redireciona para a página inicial
+                    setTimeout(() => self.$router.push({name: 'inicio'}), 1500);
                 }
                 else{
-                    alert("Erro de Login! Senha ou Email inválidos"); // se o status nao for 200 
+                    self.alertError();
                     self.$router.push({ name: "login" }); //Mantém para a página de login
                 }
             })
             .catch(function (error) {
                 console.error(error.msg);
             });
+        },
+
+        alertSucess(){
+            this.$swal.fire({
+                icon: 'success',
+                title: 'Usuário Logado com Sucesso',
+                showConfirmButton: false,
+                timer: 1500,
+                background: '#fff url(/images/trees.png)',
+            })
+        },
+        alertError(){
+            this.$swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email ou Senha errados!',
+            })
         },
     },
 }

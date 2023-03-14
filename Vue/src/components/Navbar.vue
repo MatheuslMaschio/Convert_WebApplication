@@ -20,10 +20,10 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastro
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu" >
                             <li><router-link to="/portal/cadastrar_atividade" class="dropdown-item">Atividade</router-link></li>
                             <li><router-link to="/portal/cadastrar_tp_at" class="dropdown-item" >Tipo Atividade</router-link></li>
                         </ul>
@@ -31,11 +31,10 @@
                 </ul>
             </div>
             <div>
-                <button type="button" class="at-button " at-bg="primary" @click="logout()">Logout</button>
+                <button type="button" class="btn btn-primary " at-bg="" @click="alertLogout()">Logout</button>
             </div>
         </div>
     </nav>
-
 </template>
 
 <script>
@@ -57,7 +56,35 @@ export default {
                 localStorage.removeItem("token");
                 this.$router.push({ name: "login" });  //redireciona para a página de login
             }
-        }
+        },
+
+        alertLogout(){
+            this.$swal.fire({
+                title: 'Logout',
+                text: "Você tem certeza que deseja deslogar!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, fazer Logout!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const token = localStorage.getItem("token");
+                    if (token) { //se token for nulo
+                        localStorage.removeItem("token");
+                        this.$router.push({ name: "login" });  //redireciona para a página de login
+                    }
+                    this.$swal.fire(
+                        'Logout!',
+                        'Usuário deslogado com Sucesso!',
+                        'success'
+                    )
+                }             
+            })
+        },
+    
+
     }
 }
 </script>

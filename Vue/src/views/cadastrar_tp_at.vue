@@ -6,12 +6,12 @@
                 <div class="card-body">
                     <h1>Cadastrar Tipo de Atividade</h1>
                     <div >
-                        <div class="at-field">
+                        <div class="mb-3">
+                            <label>Descricao</label>
                             <input type="text" v-model="descricao" class="form-control">
-                            <label><i class="bx bx-text"></i>Descricao</label>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="at-button" at-bg="primary" @click="cadastrar_tipo_at" >Cadastrar</button>
+                            <button type="submit" class="btn btn-primary" @click="cadastrar_tipo_at" >Cadastrar</button>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ export default {
                     this.$router.push({ name: "login" });  //redireciona para a página de login
                 }
                 else {
-                    console.log("ok caiu aqui");
+                    
                 }
             }else{//se ñ existir token 
                 this.$router.push({ name: "login" });  //redireciona para a página de login
@@ -85,6 +85,7 @@ export default {
             .then(function (response){
                 console.log(response);
                 self.limpaInput();
+                self.alertSucess(); 
             })
             .catch(function (error) {
                 console.error(error.msg);
@@ -93,7 +94,18 @@ export default {
 
         limpaInput(){
             this.descricao = "";    
-        }
+        },
+
+        alertSucess(){
+            this.$swal.fire({
+            icon: 'success',
+            title: 'Atividade Cadastrada com Sucesso!',
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#fff url(/images/trees.png)',
+            })
+        },
+
     }
 }
 </script>

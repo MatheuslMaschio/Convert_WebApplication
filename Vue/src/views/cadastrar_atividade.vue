@@ -73,7 +73,6 @@ export default {
                     this.$router.push({ name: "login" });  //redireciona para a página de login
                 }
                 else {
-                    console.log("ok caiu aqui");
                     this.gerarRequest();
                 }
             }
@@ -102,6 +101,7 @@ export default {
             axios.request(options) //enviando a request 
             .then(function (response){
                 console.log(response);
+                self.alertSucess()
                 self.limpaInput(); //limpando os inputs
             
 
@@ -133,7 +133,17 @@ export default {
             this.tipo = "";
             this.status = "";
             
-        }
+        },
+
+        alertSucess(){
+            this.$swal.fire({
+            icon: 'success',
+            title: 'Atividade Cadastrada com Sucesso!',
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#fff url(/images/trees.png)',
+            })
+        },
     }
 }
 </script>

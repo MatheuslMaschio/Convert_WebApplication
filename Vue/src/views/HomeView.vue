@@ -13,8 +13,8 @@
     <thead at-bg="primary">
       <tr class="align-baseline bg-info text-light text-center">
         <th scope="col">#</th>
-        <th scope="col">tipo</th>
-        <th scope="col">Descricao</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Descrição</th>
         <th scope="col">Status</th>
         <th scope="col">Excluir</th>
       </tr>
@@ -74,6 +74,7 @@ export default {
           this.$router.push({ name: "login" });  //redireciona para a página de login
         }
         else {
+          
           this.criarTabela(); //chamamos o criarTabela no created para que quando iniciarmos a aplicação o vue já chame a função.
         }
       }
@@ -109,24 +110,42 @@ export default {
     },
 
     deleteAtividade(id){
-      const self = this;
-      const options = {
-        method: 'DELETE',
-        url: 'http://localhost/projetos/PHP/api/atividade/delete.php',
-        headers: {
-          "Access-Control-Allow-Origin" : "*" 
-        },
-        data: {
-          id: id,
+      this.$swal.fire({ //itens do sweet alert
+        title: 'Você tem certeza?',
+        text: "Você não podera reverter depois disso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar atividade!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if(result.isConfirmed) {
+          const self = this;
+          const options = {
+            method: 'DELETE',
+            url: 'http://localhost/projetos/PHP/api/atividade/delete.php',
+            headers: {
+              "Access-Control-Allow-Origin" : "*" 
+            },
+            data: {
+              id: id,
+            }
+          };
+          //--> AXIOS <-- 
+          axios.request(options).then(function (response){
+            self.criarTabela();
+            console.log(response.data);
+          }).catch(function (error){
+            console.log(error);
+          });
+          this.$swal.fire(
+            'Excluído!',
+            'A atividade foi exclída com sucesso!',
+            'success'
+          )
         }
-      };
-      //--> AXIOS <-- 
-      axios.request(options).then(function (response){
-        self.criarTabela();
-        console.log(response.data);
-      }).catch(function (error){
-        console.error(error);
-      });
+      })
     },
   },
 }

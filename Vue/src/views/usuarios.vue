@@ -1,4 +1,4 @@
-    <template>
+<template>
     <div class="container container-lg">
         <div class="row mt-3">
             <div class="col col-lg-6">
@@ -102,7 +102,6 @@ export default {
                     this.$router.push({ name: "login" });  //redireciona para a página de login
                 }
                 else {
-                    console.log("ok caiu aqui, ainda tem tempo até expirar o token");
                     this.criarTabela();
                 }
             }
@@ -177,8 +176,10 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response.data);
+                self.alertSucess();
                 self.criarTabela(); //gerando a tabela novamente
                 self.limpaInput(); //limpa os inputs
+                self.isOpen = false;
             }).catch(function (error) {
                 console.log(error);  
             })
@@ -186,29 +187,57 @@ export default {
 
 
         deleteUsuario(id){
-            const self = this;
-            const options = {
-                method: 'DELETE',
-                url: 'http://localhost/projetos/PHP/api/users/delete.php',
-                headers: {
-                    "Access-Control-Allow-Origin" : "*" 
-                },
-                data: {
-                    id: id,
-                }
-            };
-            //--> AXIOS <-- 
-            axios.request(options).then(function (response){
-                self.criarTabela();
-                console.log(response.data);
-            }).catch(function (error){
-                console.error(error);
-            });
+            this.$swal.fire({ //itens do sweet alert
+                title: 'Você tem certeza?',
+                text: "Você não podera reverter depois disso!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar atividade!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    const self = this;
+                    const options = {
+                        method: 'DELETE',
+                        url: 'http://localhost/projetos/PHP/api/users/delete.php',
+                        headers: {
+                            "Access-Control-Allow-Origin" : "*" 
+                        },
+                        data: {
+                            id: id,
+                        }
+                    };
+                    //--> AXIOS <-- 
+                    axios.request(options).then(function (response){
+                        self.criarTabela();
+                        console.log(response.data);
+                    }).catch(function (error){
+                        console.log(error);
+                    });
+                    this.$swal.fire(
+                        'Excluído!',
+                        'A atividade foi exclída com sucesso!',
+                        'success'
+                    )
+                }   
+            })
         },
 
         limpaInput(){
             this.nome = "";
             this.email = "";
+        },
+
+        alertSucess(){
+            this.$swal.fire({
+                icon: 'success',
+                title: 'Usuário Atualizado com Sucesso',
+                showConfirmButton: false,
+                timer: 1500,
+                background: '#fff url(/images/trees.png)',
+            })
         },
     }
 }
