@@ -101,8 +101,14 @@ export default {
             axios.request(options) //enviando a request 
             .then(function (response){
                 console.log(response);
-                self.alertSucess()
-                self.limpaInput(); //limpando os inputs
+                if(response.data.status == 200){
+                    self.alertSucess();
+                    self.limpaInput(); //limpando os inputs
+                }
+                else{
+                    self.alertError();
+                }
+                
             
 
             })
@@ -144,6 +150,14 @@ export default {
             background: '#fff url(/images/trees.png)',
             })
         },
+
+        alertError(){
+            this.$swal.fire({
+                icon: 'error',
+                title: 'Erro ao Cadastrar!',
+                text: 'Algum campo não foi preenchido corretamente!',
+            })
+        }
     }
 }
 </script>

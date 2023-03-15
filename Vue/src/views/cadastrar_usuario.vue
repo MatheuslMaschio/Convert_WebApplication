@@ -27,7 +27,10 @@
                                     <input type="password" v-model="senha" class="form-control form-control-lg" />
                                 </div>
 
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit" @click="cadastrarUsuario">Cadastrar</button>
+                                <div class="form-outline form-white mb-4">
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit" @click="cadastrarUsuario">Cadastrar</button>
+                                </div>
+                                <button class="btn btn-outline-light btn-lg px-5" type="button">Voltar</button>
                             </div>
                         </div>
                     </div>
@@ -69,6 +72,7 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response);
+                
                 self.$router.push({ name: "login" }); 
                 
 
