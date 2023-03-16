@@ -44,7 +44,12 @@ if($num > 0) {
 
 } else {
     //Se não há categorias
-    echo json_encode(array('message' => 'Não há post'));
+    echo json_encode(
+        array(
+            'Status' => '203',
+            'Mensagem' => 'Não há post'
+        )
+    );
     
 }
 ?>

@@ -47,6 +47,7 @@
         //Se não há categorias
         echo json_encode(
             array(
+                'Status' => '202',
                 'Mensagem' => 'Não existe nenhuma tipo de atividade.'
             )
         );

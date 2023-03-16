@@ -28,12 +28,18 @@
     //Atualizando usuario
     if($usuario->update()) {
         echo json_encode(
-            array('message' => 'usuario Atualizado com sucesso!')
+            array(
+                'Status' => '200',
+                'Mensagem' => 'Usuário Atualizado com sucesso!'
+            )
         );
     } 
     else{
         echo json_encode(
-            array('message' => 'usuario Não foi Atualizado!')
+            array(
+                'Status' => '400',
+                'Mensagem' => 'Usuário Não foi Atualizado!'
+            )
         );
     }
 ?>

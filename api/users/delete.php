@@ -24,11 +24,17 @@
     //Deletando atividade
     if($usuario->delete()){
         echo json_encode(
-            array("Mensagem" => "Usuário deletado com sucesso!")
+            array(
+                "Status" => "200",
+                "Mensagem" => "Usuário deletado com sucesso!"
+            )
         );
     } else {
         echo json_encode(
-            array("Mensagem" => "Usuário não foi deletado")
+            array(
+                "Status" => "400",
+                "Mensagem" => "Usuário não foi deletado"
+            )
         );
     }
 ?>

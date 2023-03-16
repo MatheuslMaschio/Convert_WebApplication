@@ -26,11 +26,17 @@
     //Atualizando atividade
     if($tipoAtividade->update()) {
         echo json_encode(
-            array('Mensagem' => 'Tipo de atividade Atualizada com sucesso!')
+            array(
+                'Status' => '200',
+                'Mensagem' => 'Tipo de atividade Atualizada com sucesso!'
+            )
         );
     } else {
         echo json_encode(
-            array('Mensagem' => 'Tipo de atividade Não foi Atualizada!')
+            array(
+                'Status' => '400',
+                'Mensagem' => 'Tipo de atividade Não foi Atualizada!'
+            )
         );
     }
 ?>

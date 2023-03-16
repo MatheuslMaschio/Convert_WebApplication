@@ -46,7 +46,11 @@ if($num > 0) {
 
 } else {
     //Se não há categorias
-    echo json_encode(array('Mensagem' => 'Não existe nenhuma atividade.'));
+    echo json_encode(array(
+        'Status' => '400',
+        'Mensagem' => 'Não existe nenhuma atividade.'
+        )
+    );
     
 }
 ?>

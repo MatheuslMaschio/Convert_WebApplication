@@ -25,11 +25,17 @@
     //Deletando Atividade
     if($atividade->delete()) {
         echo json_encode(
-            array('Mensagem' => 'Atividade Deletada com sucesso!')
+            array(
+                'Status' => "200",
+                'Mensagem' => 'Atividade Deletada com sucesso!'
+            )
         );
     } else {
         echo json_encode(
-            array('Mensagem' => 'Atividade Não foi Deletada!')
+            array(
+                'Status' => '400',
+                'Mensagem' => 'Algo deu errado Atividade Não foi Deletada!'
+            )
         );
     }
 ?>

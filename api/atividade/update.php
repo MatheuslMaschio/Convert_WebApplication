@@ -29,11 +29,17 @@
     //Atualizando atividade
     if($atividade->update()) {
         echo json_encode(
-            array('Mensagem' => 'Atividade Atualizada com sucesso!')
+            array(
+                'Status' => '200',
+                'Mensagem' => 'Atividade Atualizada com sucesso!'
+            )
         );
     } else {
         echo json_encode(
-            array('Mensagem' => 'Atividade Não foi Atualizada!')
+            array(
+                'Status' => '400',
+                'Mensagem' => 'Atividade Não foi Atualizada!'
+            )
         );
     }
 ?>
