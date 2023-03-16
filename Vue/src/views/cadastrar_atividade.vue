@@ -19,7 +19,6 @@
                         </div>
                         <div class="at-field">
                             <select class="form-select"  v-model="status">
-                                <option selected>Escolha...</option>
                                 <option value="1">Ativa</option>
                                 <option value="2">Concluída</option>
                             </select>
@@ -101,7 +100,7 @@ export default {
             axios.request(options) //enviando a request 
             .then(function (response){
                 console.log(response);
-                if(response.data.status == 200){
+                if(response.data.Status == 200){
                     self.alertSucess();
                     self.limpaInput(); //limpando os inputs
                 }

@@ -1,9 +1,10 @@
 <?php
     //Headers
-    header('Acess-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: *");
     header('Access-Control-Allow-Methods: PUT');
-    header('Acces-Control-Allow-Headers: *');
+
+    header('Content-Type: application/json; charset=utf-8');
 
     include_once '../../config/Database.php';
     include_once '../../models/tipoAtividade.php';

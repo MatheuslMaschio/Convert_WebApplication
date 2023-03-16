@@ -28,9 +28,9 @@
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                                    <button class="btn btn-outline-light btn-lg px-5" type="submit" @click="cadastrarUsuario">Cadastrar</button>
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit" @click="cadastrarUsuario()">Cadastrar</button>
                                 </div>
-                                <button class="btn btn-outline-light btn-lg px-5" type="button">Voltar</button>
+                                <button class="btn btn-outline-light btn-lg px-5" type="button" @click="voltar()">Voltar</button>
                             </div>
                         </div>
                     </div>
@@ -71,16 +71,42 @@ export default {
             // --> AXIOS <--
             axios.request(options)
             .then(function (response){
-                console.log(response);
-                
-                self.$router.push({ name: "login" }); 
-                
+                console.log(response); 
+                if(response.data.Status == 200){
+                    self.alertSucess();
+                    setTimeout(() => self.$router.push({name: 'login'}), 1500);
+                }
+                else{
+                    self.alertError();
+                }
 
             })
             .catch(function (error) {
                 console.error(error.msg);
             });
         },
+
+        alertSucess(){
+            this.$swal.fire({
+            icon: 'success',
+            title: 'Usuário Cadastrada com Sucesso!',
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#fff url(/images/trees.png)',
+            })
+        },
+
+        alertError(){
+            this.$swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo deu errado!',
+            })
+        },
+
+        voltar(){
+            this.$router.push({name: 'login'});
+        }
     } 
 }
 

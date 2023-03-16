@@ -13,6 +13,8 @@
     $database = new Database();
     $db = $database->connect();
 
+    // middleware para autenticação
+
     //Instanciando atividade object
     $tipoAtividade = new tipoAtividade($db);
 
@@ -24,23 +26,25 @@
     
 
     //Criando Tipo de Atividade
-    if(!empty($tipoAtividade->descricao)){
-        if($tipoAtividade->create()) {
-            //resposta
-            echo json_encode(
-                array(
-                    "Status" => "200",
-                    'Mensagem' => 'Tipo de Atividade Criada com sucesso!'
-                )
-            );
-        }
-        else{
-            echo json_encode(
-                array(
-                    "Status" => "400",
-                    "Mensagem" => "Não foi possível criar Tipo de Atividade"
-                )
-            );
-        }
+    if(
+        !empty($tipoAtividade->descricao) && 
+        $tipoAtividade->create()
+    ){
+        //resposta
+        echo json_encode(
+            array(
+                "Status" => "200",
+                'Mensagem' => 'Tipo de Atividade Criada com sucesso!'
+            )
+        );
     }
+    else{
+        echo json_encode(
+            array(
+                "Status" => "400",
+                "Mensagem" => "Não foi possível criar Tipo de Atividade"
+            )
+        );
+    }
+    
 ?>

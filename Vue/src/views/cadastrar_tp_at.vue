@@ -84,7 +84,7 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response);
-                if(response.data.status == 200){
+                if(response.data.Status == 200){
                     self.limpaInput();
                     self.alertSucess(); 
                 }
@@ -104,7 +104,7 @@ export default {
         alertSucess(){
             this.$swal.fire({
             icon: 'success',
-            title: 'Atividade Cadastrada com Sucesso!',
+            title: 'Tipo de Atividade Cadastrada com Sucesso!',
             showConfirmButton: false,
             timer: 1500,
             background: '#fff url(/images/trees.png)',

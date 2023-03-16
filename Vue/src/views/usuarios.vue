@@ -10,57 +10,56 @@
         <!--tabela -->
         <br>
         <table class="at-table">
-        <thead at-bg="primary">
-            <tr class="align-baseline bg-info text-light text-center">
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col"> Excluir</th>
-                <th scope="col"> Editar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
-            <td>{{ dados.id }}</td>
-            <td>{{ dados.nome }}</td>
-            <td>{{ dados.email }}</td>
-            <td> <button class=" at-button" at-bg="danger" @click="this.deleteUsuario(dados.id)">Excluir</button></td>
-            <td> <button class=" at-button" at-bg="primary" @click="preparaEdit(dados.id)">Editar</button></td> 
-            </tr>
-        </tbody>
+            <thead at-bg="primary">
+                <tr class="align-baseline bg-info text-light text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col"> Excluir</th>
+                    <th scope="col"> Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
+                <td>{{ dados.id }}</td>
+                <td>{{ dados.nome }}</td>
+                <td>{{ dados.email }}</td>
+                <td> <button class=" at-button" at-bg="danger" @click="this.deleteUsuario(dados.id)">Excluir</button></td>
+                <td> <button type="button" class="at-button" at-bg="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="preparaEdit(dados.id)">Editar</button></td>
+                </tr>
+            </tbody>
         </table>
-    </div>
 
-    <div>                   
-        <transition name="modal"> 
-            <div v-if="isOpen">
-                <div class="overlay" @click.self="isOpen = false;">
-                    <div class="container">
-                        <div class="row">
-                            <div class = "card">
-                                <div class = "card-body">
-                                    <h1>Atualizar Usuario</h1>
-                                    <div>
-                                        <div class="mb-3">
-                                            <label>Nome</label>
-                                            <input type="text" v-model="nome" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>email</label>
-                                            <input type="text" v-model="email" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <button type="submit" class="at-button" at-bg="primary" @click="atualizarUsuario">Atualizar</button>
-                                            <button class="at-button" at-bg="danger" @click.self="isOpen = false;">Cancelar</button>
-                                        </div>
-                                    </div>
-                                </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Atividade</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div>
+                            <div class="at-field">
+                                <input type="text" v-model="nome" class="form-control">
+                                <label><i class="bx bx-text"></i>Nome</label>
+                            </div>
+
+                            <div class="at-field">
+                                <input type="text" v-model="email" class="form-control">
+                                <label><i class="bx bx-text"></i>Nome</label>
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="at-button" at-bg="danger" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="at-button" at-bg="primary" data-bs-dismiss="modal" @click="atualizarUsuario()">Alterar</button>
+                    </div>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
@@ -134,8 +133,6 @@ export default {
 
 
         preparaEdit(id){
-            this.isOpen = true; //definindo true para o modal abrir 
-
             const self = this; //definindo self = this para usar dentro do axios
             const options = {
             method: 'GET', //definindo o metodo get
@@ -194,7 +191,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, deletar atividade!',
+                confirmButtonText: 'Sim, deletar Usuário!',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if(result.isConfirmed) {
@@ -218,7 +215,7 @@ export default {
                     });
                     this.$swal.fire(
                         'Excluído!',
-                        'A atividade foi exclída com sucesso!',
+                        'O usuário foi excluído com sucesso!',
                         'success'
                     )
                 }   
@@ -242,44 +239,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.modal {
-    width: 500px;
-    margin: 0px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px 3px;
-    transition: all 0.2s ease-in;
-    font-family: Helvetica, Arial, sans-serif;
-}
-.fadeIn-enter {
-    opacity: 0;
-}
-
-.fadeIn-leave-active {
-    opacity: 0;
-    transition: all 0.2s step-end;
-}
-
-.fadeIn-enter .modal,
-.fadeIn-leave-active.modal {
-    transform: scale(1.1);
-}
-
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: #00000094;
-    z-index: 999;
-    transition: opacity 0.2s ease;
-}
-</style>

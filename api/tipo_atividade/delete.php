@@ -1,9 +1,9 @@
 <?php
     //Headers
-    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Origin: * ');
     header('Content-Type: application/json');
     header('Access-Control-Allow-Methods: DELETE');
-    header('Acces-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+    header('Access-Control-Allow-Headers: *');
 
     include_once '../../config/Database.php';
     include_once '../../models/tipoAtividade.php';
@@ -24,11 +24,17 @@
     //Deletando Atividade
     if($tipoAtividade->delete()) {
         echo json_encode(
-            array('Mensagem' => 'Atividade Deletada com sucesso!')
+            array(
+                "Status" => "200",
+                'Mensagem' => 'Atividade Deletada com sucesso!'
+            )
         );
     } else {
         echo json_encode(
-            array('Mensagem' => 'Atividade Não foi Deletada!')
+            array(
+                "Status" => "400",
+                'Mensagem' => 'Atividade Não foi Deletada!'
+            )
         );
     }
 ?>

@@ -19,6 +19,10 @@
                         <router-link to="/portal/usuarios" class="nav-link">Usuarios</router-link>
                     </li>
 
+                    <li class="nav-item">
+                        <router-link to="/portal/tipos" class="nav-link">Tipos</router-link>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastro
