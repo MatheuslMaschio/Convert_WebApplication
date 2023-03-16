@@ -2,7 +2,7 @@
     <br /><br /><br /><br />
     <div class="container">
         <div class="row">
-            <div class="card">
+            <div class="card" >
                 <div class="card-body">
                     <h1>Cadastrar Tipo de Atividade</h1>
                     <div >
@@ -17,8 +17,7 @@
                 </div>
             </div>
         </div>
-    </div>        
-    
+    </div>          
 </template>
 
 <script>
@@ -118,7 +117,6 @@ export default {
                 text: 'Algum campo não foi preenchido corretamente!',
             })
         }
-
     }
 }
 </script>

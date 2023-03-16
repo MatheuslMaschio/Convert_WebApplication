@@ -35,7 +35,7 @@
                 </ul>
             </div>
             <div>
-                <button type="button" class="btn btn-primary " at-bg="" @click="alertLogout()">Logout</button>
+                <button type="button" class="at-button " at-bg="reverse-primary" @click="alertLogout()">Logout</button>
             </div>
         </div>
     </nav>

@@ -2,7 +2,7 @@
     <br /><br /><br /><br />
     <div class="container">
         <div class="row">
-            <div class = "card">
+            <div class = "card" >
                 <div class = "card-body">
                     <h1>Cadastrar Atividade</h1>
 
@@ -67,7 +67,6 @@ export default {
 
                 horaAtual = horaAtual - 3 * 60 * 60 * 1000; //arrumando a hora atual por causa do fuso
                 
-
                 if(dataExpiracao < horaAtual) { //se a data de expiração for menor que a hora atual
                     this.$router.push({ name: "login" });  //redireciona para a página de login
                 }
@@ -107,9 +106,6 @@ export default {
                 else{
                     self.alertError();
                 }
-                
-            
-
             })
             .catch(function (error) {
                 console.error(error.msg);

@@ -3,14 +3,14 @@
         <div class="row mt-3">
             <div class="col col-lg-6">
                 <br>
-                <h4 class="text-info">Tabela De Usuarios</h4>
+                <h4 class="text-dark">Tabela De Usuarios</h4>
             </div>
         </div>
 
         <!--tabela -->
         <br>
-        <table class="at-table">
-            <thead at-bg="primary">
+        <table class="at-table" at-bg="dark">
+            <thead at-bg="light-blue">
                 <tr class="align-baseline bg-info text-light text-center">
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
@@ -24,8 +24,8 @@
                 <td>{{ dados.id }}</td>
                 <td>{{ dados.nome }}</td>
                 <td>{{ dados.email }}</td>
-                <td> <button class=" at-button" at-bg="danger" @click="this.deleteUsuario(dados.id)">Excluir</button></td>
-                <td> <button type="button" class="at-button" at-bg="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="preparaEdit(dados.id)">Editar</button></td>
+                <td> <button class=" at-button" at-bg="reverse-danger" @click="this.deleteUsuario(dados.id)">Excluir</button></td>
+                <td> <button type="button" class="at-button" at-bg="reverse-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="preparaEdit(dados.id)">Editar</button></td>
                 </tr>
             </tbody>
         </table>

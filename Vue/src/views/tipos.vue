@@ -3,14 +3,14 @@
         <div class="row mt-3">
             <div class="col col-lg-6">
                 <br>
-                <h4 class="text-info">Tabela Dos Tipos de Atividade</h4>
+                <h4 class="text-dark">Tabela Dos Tipos de Atividade</h4>
             </div>
         </div>
 
         <!--tabela -->
         <br>
-        <table class="at-table">
-            <thead at-bg="primary">
+        <table class="at-table" at-bg="dark">
+            <thead at-bg="light-blue">
                 <tr class="align-baseline bg-info text-light text-center">
                     <th scope="col">#</th>
                     <th scope="col">Descrição</th>
@@ -22,8 +22,8 @@
                 <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
                     <td>{{ dados.id }}</td>
                     <td>{{ dados.descricao }}</td>
-                    <td> <button class=" at-button" at-bg="danger"  @click="deleteTipo(dados.id)"> Excluir</button></td>
-                    <td> <button type="button" class="at-button" at-bg="primary" data-bs-toggle="modal" data-bs-target="#modalTipo" @click="preparaEdit(dados.id)">Editar</button></td>
+                    <td> <button class=" at-button" at-bg="reverse-danger"  @click="deleteTipo(dados.id)"> Excluir</button></td>
+                    <td> <button type="button" class="at-button" at-bg="reverse-primary" data-bs-toggle="modal" data-bs-target="#modalTipo" @click="preparaEdit(dados.id)">Editar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -130,7 +130,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, deletar atividade!',
+                confirmButtonText: 'Sim, deletar Tipo de atividade!',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if(result.isConfirmed) {
@@ -235,7 +235,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>

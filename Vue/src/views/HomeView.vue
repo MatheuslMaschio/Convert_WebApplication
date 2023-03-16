@@ -1,82 +1,81 @@
 <template>
-
-<div class="container container-lg">
-  <div class="row mt-3">
-    <div class="col col-lg-6">
-      <br>
-      <h4 class="text-info">Tabela De Atividades</h4>
-    </div>
-  </div>
-  <!--tabela -->
-  <br>
-  <table class="at-table">
-    <thead at-bg="primary">
-      <tr class="align-baseline bg-info text-light text-center">
-        <th scope="col">#</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Status</th>
-        <th scope="col">Excluir</th>
-        <th scope="col">Editar</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
-        <td>{{ dados.id }}</td>
-        <td>{{ dados.tipo }}</td>
-        <td>{{ dados.descricao }}</td>
-        <td>{{ dados.status }}</td>
-        <td> <button class=" at-button" at-bg="danger"  @click="this.deleteAtividade(dados.id)"> Excluir</button></td>
-        <td> <button type="button" class="at-button" at-bg="primary" data-bs-toggle="modal" data-bs-target="#modalAtividade" @click="preparaEdit(dados.id)">Editar</button></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <!--modal -->
-  <div class="modal fade" id="modalAtividade" tabindex="-1" aria-labelledby="modalAtividadeLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalAtividadeLabel">Atividade</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-          <div>
-            <div class="at-field">
-              <input type="text" v-model="descricao" class="form-control">
-              <label><i class="bx bx-text"></i>Descricao</label>
-            </div>
-
-            <div class="at-field">
-              <select class="form-select" v-model="tipo" >
-                <option selected v-for="(dados, index) in tipos.data" :key="index"> {{ dados.id }} {{dados.descricao}}</option>
-              </select>
-              <label><i class="bx bx-menu"></i>Tipo de Atividade: </label>
-            </div>
-
-            <div class="at-field">
-              <select class="form-select"  v-model="status">
-                <option value="1">Ativa</option>
-                <option value="2">Concluída</option>
-              </select>
-              <label><i class="bx bx-menu"></i>Status: </label>
-            </div>
-          
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="at-button" at-bg="danger" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="at-button" at-bg="primary" data-bs-dismiss="modal" @click="atualizarUsuario()">Alterar</button>
-        </div>
-        
+  <div class="container container-lg">
+    <div class="row mt-3">
+      <div class="col col-lg-6">
+        <br>
+        <h4 class="text-dark">Tabela De Atividades</h4>
       </div>
     </div>
-  </div>
+    <!--tabela -->
+    <br>
+    <table class="at-table " at-bg="dark">
+      <thead at-bg="light-blue">
+        <tr class="align-baseline bg-info text-light text-center">
+          <th scope="col">#</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Status</th>
+          <th scope="col">Excluir</th>
+          <th scope="col">Editar</th>
 
-</div>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
+          <td>{{ dados.id }}</td>
+          <td>{{ dados.tipo }}</td>
+          <td>{{ dados.descricao }}</td>
+          <td>{{ dados.status }}</td>
+          <td> <button class=" at-button" at-bg="reverse-danger"  @click="this.deleteAtividade(dados.id)"> Excluir</button></td>
+          <td> <button type="button" class="at-button" at-bg="reverse-primary" data-bs-toggle="modal" data-bs-target="#modalAtividade" @click="preparaEdit(dados.id)">Editar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!--modal -->
+    <div class="modal fade" id="modalAtividade" tabindex="-1" aria-labelledby="modalAtividadeLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAtividadeLabel">Atividade</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div>
+              <div class="at-field">
+                <input type="text" v-model="descricao" class="form-control">
+                <label><i class="bx bx-text"></i>Descricao</label>
+              </div>
+
+              <div class="at-field">
+                <select class="form-select" v-model="tipo" >
+                  <option selected v-for="(dados, index) in tipos.data" :key="index"> {{ dados.id }} {{dados.descricao}}</option>
+                </select>
+                <label><i class="bx bx-menu"></i>Tipo de Atividade: </label>
+              </div>
+
+              <div class="at-field">
+                <select class="form-select"  v-model="status">
+                  <option value="1">Ativa</option>
+                  <option value="2">Concluída</option>
+                </select>
+                <label><i class="bx bx-menu"></i>Status: </label>
+              </div>
+            
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="at-button" at-bg="danger" data-bs-dismiss="modal">Fechar</button>
+            <button type="button" class="at-button" at-bg="primary" data-bs-dismiss="modal" @click="atualizarUsuario()">Alterar</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -268,7 +267,6 @@ export default {
         background: '#fff url(/images/trees.png)',
       })
     },
-
   },
 }
 
