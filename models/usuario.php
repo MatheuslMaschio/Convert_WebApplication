@@ -80,10 +80,19 @@
             //Ligando valores
             $stmt->bindParam(':nome', $this->nome);
             $stmt->bindParam(':email', $this->email);
+            
+            //Criando salt para a senha do usuario
+            $salt = 'dCUrtqi@YwLK8tw';
 
             //Passando sha1 para a senha do usuario 
             $sha1 = sha1($this->senha);
-            $stmt->bindParam(':senha', $sha1);
+
+            //juntando salt com a senha do usuario 
+            $sha1_and_salt = "$sha1$salt";
+
+            $sha1_and_salt = sha1($sha1_and_salt);
+
+            $stmt->bindParam(':senha', $sha1_and_salt);
 
             if($stmt->execute()){
                 return true;
@@ -112,12 +121,18 @@
 
             //Passando sha1 para a senha do usuario 
             $sha1 = sha1($this->senha);
-            $stmt->bindParam(':senha', $sha1);
+            //Criando salt para a senha do usuario
+            $salt = 'dCUrtqi@YwLK8tw';
+            //juntando salt com a senha do usuario 
+            $sha1_and_salt = "$sha1$salt";
+
+            $sha1_and_salt = sha1($sha1_and_salt);
+
+            $stmt->bindParam(':senha',  $sha1_and_salt);
 
             //executando a query
             $stmt->execute();        
             return $stmt;
-            
         }
 
         //Atualizando o usuário

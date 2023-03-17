@@ -49,7 +49,7 @@
             aud - define o dominio que pode usar o token
             exp - data de vencimento do token 
         */
-        $duracao =  (time() -10800) + (60 * 60);
+        $duracao =  (time() -10800) + (60 * 30);
 
         $payload = [
             'exp' => $duracao,
@@ -76,9 +76,11 @@
         //Codificar dados em base64
         $signature = base64_encode($signature);
 
-        $token = "$header.$payload.$signature";
+        $salt = 'dCUrtqi@YwLK8tw';
 
-        setcookie ('token', $token, ((time() -10800) + (60 * 60)));
+        $token = "$header.$payload.$signature.$salt";
+
+        setcookie ('token', $token, ((time() -10800) + (60 * 30)));
 
         http_response_code(200);
 

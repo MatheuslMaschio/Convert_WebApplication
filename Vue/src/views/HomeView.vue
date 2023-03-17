@@ -47,10 +47,9 @@
                 <input type="text" v-model="descricao" class="form-control">
                 <label><i class="bx bx-text"></i>Descricao</label>
               </div>
-
               <div class="at-field">
                 <select class="form-select" v-model="tipo" >
-                  <option selected v-for="(dados, index) in tipos.data" :key="index"> {{ dados.id }} {{dados.descricao}}</option>
+                  <option v-for="(dados, index) in tipos.data" :key="index"> {{ dados.id }} {{dados.descricao}}</option>
                 </select>
                 <label><i class="bx bx-menu"></i>Tipo de Atividade: </label>
               </div>
@@ -261,7 +260,7 @@ export default {
     alertSucess(){
       this.$swal.fire({
         icon: 'success',
-        title: 'Usuário Atualizado com Sucesso',
+        title: 'Atividade Atualizada com Sucesso',
         showConfirmButton: false,
         timer: 1500,
         background: '#fff url(/images/trees.png)',

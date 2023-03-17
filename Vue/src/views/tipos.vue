@@ -154,7 +154,7 @@ export default {
                     });
                     this.$swal.fire(
                         'Excluído!',
-                        'A atividade foi excluída com sucesso!',
+                        'O tipo de atividade foi excluída com sucesso!',
                         'success'
                     )
                 }
