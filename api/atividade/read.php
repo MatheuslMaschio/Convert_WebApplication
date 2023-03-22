@@ -17,40 +17,59 @@ $atividade= new Atividade($db);
 // atividade read consulta
 $result = $atividade->read();
 
-//Verficando o numero de linhas
-$num = $result->rowCount();
+$var = getallheaders();
+    
+$header = $var["Authorization"];
+$header = explode(" ", $header);
+$header = $header[1];
 
-//Verificar se há alguma atividade
-if($num > 0) {
-    //atividade Array
-    $at_arr = array();
-    $at_arr ['data'] = array();
+if($header == null){
+    throw new Exception("Token inválido ou inexistente", 401);
+}
 
-    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
+else if (!empty($header)) {
 
-        $at_item = array(
-            'id' => $row['id'],
-            'datahora' => $row['datahora'],
-            'tipo' => $row['tipo'],
-            'descricao' => $row['descricao'],
-            'status' => $row['status'],
+    $sql = "SELECT token FROM tokens where token = :t";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':t',$header);
+
+    if($stmt->execute()){
+        //Verficando o numero de linhas
+        $num = $result->rowCount();
+
+        //Verificar se há alguma atividade
+        if($num > 0) {
+            //atividade Array
+            $at_arr = array();
+            $at_arr ['data'] = array();
+
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+
+                $at_item = array(
+                    'id' => $row['id'],
+                    'datahora' => $row['datahora'],
+                    'tipo' => $row['tipo'],
+                    'descricao' => $row['descricao'],
+                    'status' => $row['status'],
+                );
+                //Enviando para data
+                array_push($at_arr['data'], $at_item);
+            }
+            //Transformando em JSON
+            echo json_encode($at_arr);
+        }
+    } else {
+        //Se não há atividade
+        echo json_encode(array(
+            'Status' => '202',
+            'Mensagem' => 'Não existe nenhuma atividade.'
+            )
         );
         
-        //Enviando para data
-        array_push($at_arr['data'], $at_item);
     }
-
-    //Transformando em JSON
-    echo json_encode($at_arr);
-
-} else {
-    //Se não há categorias
-    echo json_encode(array(
-        'Status' => '400',
-        'Mensagem' => 'Não existe nenhuma atividade.'
-        )
-    );
-    
 }
+    
 ?>

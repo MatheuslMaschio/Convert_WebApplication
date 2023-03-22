@@ -1,3 +1,4 @@
+
 <?php 
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Headers: *');
@@ -27,6 +28,7 @@
     
     if($result->rowCount() > 0){
         
+
         $row = $result->fetch(PDO::FETCH_ASSOC);
         
         //JWT é divido em três partes separadas por ponto "." um header, um payload e um signature
@@ -96,17 +98,20 @@
         //Salvando o token
         $userId = $row['id'];
 
-        $usuario->create_token($token, $userId);
+        $usuario->create_token($token, $userId); 
+        
         
     }
     else{   
-        //http_response_code(403); -> tive problema de cors ver com o bruno 
         $usuario_arr = array(
             "Status" => '403',
-            "Mensagem" => "Inválido usuário ou senha!",
+            "Mensagem" => "Inválido usuario ou senha!",
         );
         
     }
 
-    print_r(json_encode($usuario_arr));
+    echo(json_encode($usuario_arr));
+
+
+
 ?>

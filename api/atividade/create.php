@@ -29,13 +29,31 @@
         !empty($atividade->status) &&
         $atividade->create()
     ){
-        //resposta
-        echo json_encode(
-            array(
-                "Status" => "200",
-                "Mensagem" => "Atividade criada com sucesso"
-            )
-        );
+        $header = $var["Authorization"];
+        $header = explode(" ", $header);
+        $header = $header[1];
+
+        if($header == null){
+            throw new Exception("Token inválido ou inexistente", 401);
+        }
+        else if(!empty($header)){
+
+            $sql = "SELECT token FROM tokens where token = :t";
+
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindParam(':t',$header);
+
+            if($stmt->execute()){
+                
+            }
+
+        }
+
+
+
+
+        
     }
     else{
         echo json_encode(

@@ -1,6 +1,8 @@
 <?php 
+    
     //Objeto USUARIO
     class Usuario {
+        
         //Conexao com o banco e nome
         private $conn;
         private $table_name = "usuarios";
@@ -183,7 +185,7 @@
                 $userExiste->bindValue(':id', $userId);
 
                 $userExiste->execute();
-            }else{ //Se o usuario O EXISTE ele vai inserir um token novo 
+            }else{ //Se o usuario N EXISTE ele vai inserir um token novo 
                 $sql = "INSERT INTO tokens(token, id_usuario) VALUES (:t , :id)";
                 $query = $this->conn->prepare($sql);
 

@@ -15,26 +15,37 @@
     //Instanciando objeto do usuario
     $usuario = new Usuario($db);
 
-   //Enviando atividade para data 
-    $data = json_decode(file_get_contents("php://input"));
 
-    //Setando o ID para delete
-    $usuario->id = $data->id;
+    if(isset($_SESSION["token"])){ //Se session TOKEN existir permite executar a consulta
+        //Enviando atividade para data 
+        $data = json_decode(file_get_contents("php://input"));
 
-    //Deletando atividade
-    if($usuario->delete()){
+        //Setando o ID para delete
+        $usuario->id = $data->id;
+
+        //Deletando atividade
+        if($usuario->delete()){
+            echo json_encode(
+                array(
+                    "Status" => "200",
+                    "Mensagem" => "Usuário deletado com sucesso!"
+                )
+            );
+        } else {
+            echo json_encode(
+                array(
+                    "Status" => "400",
+                    "Mensagem" => "Usuário não foi deletado"
+                )
+            );
+        }
+    }
+    else{
         echo json_encode(
             array(
-                "Status" => "200",
-                "Mensagem" => "Usuário deletado com sucesso!"
-            )
-        );
-    } else {
-        echo json_encode(
-            array(
-                "Status" => "400",
-                "Mensagem" => "Usuário não foi deletado"
+                'Token' => 'Inválido ou não existente!'
             )
         );
     }
-?>
+?>  
+
