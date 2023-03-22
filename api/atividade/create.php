@@ -23,12 +23,7 @@
     $atividade->descricao = $data->descricao;
     $atividade->status = $data->status;
 
-    if(
-        !empty($atividade->tipo) &&
-        !empty($atividade->descricao) &&
-        !empty($atividade->status) &&
-        $atividade->create()
-    ){
+    if(!empty($atividade->tipo) && !empty($atividade->descricao) && !empty($atividade->status) && $atividade->create()) {
         $header = $var["Authorization"];
         $header = explode(" ", $header);
         $header = $header[1];
@@ -45,15 +40,17 @@
             $stmt->bindParam(':t',$header);
 
             if($stmt->execute()){
-                
+                //resposta
+                echo json_encode(
+                    array(
+                        "Status" => "200",
+                        "Mensagem" => "Atividade criada com sucesso"
+                    )
+                );
             }
 
         }
 
-
-
-
-        
     }
     else{
         echo json_encode(
