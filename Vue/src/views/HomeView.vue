@@ -12,8 +12,8 @@
       <thead at-bg="light-blue">
         <tr class="align-baseline bg-info text-light text-center">
           <th scope="col">#</th>
-          <th scope="col">Tipo</th>
           <th scope="col">Descrição</th>
+          <th scope="col">Tipo</th>
           <th scope="col">Status</th>
           <th scope="col">Excluir</th>
           <th scope="col">Editar</th>
@@ -23,8 +23,8 @@
       <tbody>
         <tr class="text-center" v-for="(dados, index) in posts.data" :key="index"> <!-- Passando para a tabela os valores da API-->
           <td>{{ dados.id }}</td>
-          <td>{{ dados.tipo }}</td>
           <td>{{ dados.descricao }}</td>
+          <td>{{ dados.tipo }}</td>
           <td>{{ dados.status }}</td>
           <td> <button class=" at-button" at-bg="reverse-danger"  @click="this.deleteAtividade(dados.id)"> Excluir</button></td>
           <td> <button type="button" class="at-button" at-bg="reverse-primary" data-bs-toggle="modal" data-bs-target="#modalAtividade" @click="preparaEdit(dados.id)">Editar</button></td>
@@ -254,9 +254,14 @@ export default {
       axios.request(options)
       .then(function (response){
         console.log(response.data);
-        self.alertSucess();
-        self.criarTabela(); //gerando a tabela novamente
-        self.limpaInput(); //limpa os inputs
+        if(response.data.Status == 200){
+          self.alertSucess();
+          self.criarTabela(); //gerando a tabela novamente
+          self.limpaInput(); //limpa os inputs
+        }
+        else{
+          self.alertError();
+        }
       }).catch(function (error) {
         console.log(error);  
       })
@@ -269,6 +274,14 @@ export default {
         showConfirmButton: false,
         timer: 1500,
         background: '#fff url(/images/trees.png)',
+      })
+    },
+
+    alertError(){
+      this.$swal.fire({
+        icon: 'error',
+        title: 'Erro ao Editar!',
+        text: 'Algum campo não foi preenchido corretamente!',
       })
     },
   },

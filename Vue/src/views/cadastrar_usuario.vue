@@ -55,12 +55,13 @@ export default {
         cadastrarUsuario(){
             const webApiUrl = "http://localhost/projetos/PHP/api/users/create_user.php"; //link da api
             const self = this  //definindo self = this para usar dentro do axios
+            const token = localStorage.getItem("token");
 
             const options = {
                 method: 'POST', //definindo método
                 url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*", //headers de acesso
+                    Authorization : "Bearer " + token
                 },
                 data: { //passando para o data os dados do formulario
                     nome : this.nome, 

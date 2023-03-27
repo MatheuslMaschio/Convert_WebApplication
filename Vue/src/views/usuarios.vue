@@ -48,7 +48,7 @@
 
                             <div class="at-field">
                                 <input type="text" v-model="email" class="form-control">
-                                <label><i class="bx bx-text"></i>Nome</label>
+                                <label><i class="bx bx-text"></i>Email</label>
                             </div>
                         </div>
                     </div>
@@ -176,10 +176,14 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response.data);
-                self.alertSucess();
-                self.criarTabela(); //gerando a tabela novamente
-                self.limpaInput(); //limpa os inputs
-                self.isOpen = false;
+                if(response.data.Status == 200){
+                    self.alertSucess();
+                    self.criarTabela(); //gerando a tabela novamente
+                    self.limpaInput(); //limpa os inputs
+                }
+                else{
+                    self.alertError();
+                }
             }).catch(function (error) {
                 console.log(error);  
             })
@@ -238,6 +242,14 @@ export default {
                 showConfirmButton: false,
                 timer: 1500,
                 background: '#fff url(/images/trees.png)',
+            })
+        },
+        
+        alertError(){
+            this.$swal.fire({
+                icon: 'error',
+                title: 'Erro ao Cadastrar!',
+                text: 'Algum campo não foi preenchido corretamente!',
             })
         },
     }

@@ -82,12 +82,13 @@ export default {
         cadastrarAtividade(){
             const webApiUrl = "http://localhost/projetos/PHP/api/atividade/create.php" //link da api
             const self = this //definindo self = this para usar dentro do axios
-
+            const token = localStorage.getItem("token");
+            
             const options = {
                 method: 'POST', //definindo o método
                 url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*", //headers de acesso
+                    Authorization : "Bearer " + token
                 },
                 data: {
                     descricao: this.descricao, //passando para o data os valores do formulario 
@@ -115,12 +116,13 @@ export default {
         consultarApi() {
             const webApiUrl = "http://localhost/projetos/PHP/api/tipo_atividade/read.php";  //link da api
             const self = this; //definindo self = this para usar dentro do axios
+            const token = localStorage.getItem("token");
 
             axios({
                 method: "get", //definindo o método
                 url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*" // headers de acesso
+                    Authorization : "Bearer " + token
                 },
             }).then((response) => (self.posts = response.data)); 
         },

@@ -108,12 +108,13 @@ export default {
             //definimos algumas variaveis para ficar mais facil
             const webApiUrl = "http://localhost/projetos/PHP/api/tipo_atividade/read.php"; 
             const self = this;
+            const token = localStorage.getItem("token");
             //--> AXIOS <-- 
             axios({
                 method: "get", //Passamos o metodo pode ser get, post, put
                 url: webApiUrl, //url
                 headers: {
-                "Access-Control-Allow-Origin" : "*" 
+                    Authorization : "Bearer " + token
                 },
             }).then((response) => (self.posts = response.data)); //pedimos para quando terminar de executar passar a resposta do data para o array posts criado no data 
         },
@@ -135,11 +136,12 @@ export default {
             }).then((result) => {
                 if(result.isConfirmed) {
                     const self = this;    
+                    const token = localStorage.getItem("token");
                     const options = {
                         method: 'DELETE',
                         url: 'http://localhost/projetos/PHP/api/tipo_atividade/delete.php',
                         headers: {
-                        "Access-Control-Allow-Origin" : "*" 
+                            Authorization : "Bearer " + token
                         },
                         data: {
                         id: id,
@@ -163,12 +165,13 @@ export default {
 
         preparaEdit(id){
             const self = this; //definindo self = this para usar dentro do axios
+            const token = localStorage.getItem("token");
             const options = {
                 method: 'GET', //definindo o metodo get
                 url: "http://localhost/projetos/PHP/api/tipo_atividade/read_single.php", //link da api
                 params:{id:id}, //passando o id
                 headers: {
-                "Access-Control-Allow-Origin" : "*" //headers de acesso
+                    Authorization : "Bearer " + token
                 },
                 data: {}
             };
@@ -185,11 +188,12 @@ export default {
 
         atualizarUsuario(){
             const self = this; //definindo self = this para usar dentro do axios
+            const token = localStorage.getItem("token");
             const options = {
                 method: 'PUT', //definindo o metodo put
                 url: "http://localhost//projetos/PHP/api/tipo_atividade/update.php", //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*" //headers de acesso
+                    Authorization : "Bearer " + token
                 },
                 data: { //passando para o data o valor dos v-model dos inputs
                     id: this.id,
@@ -200,15 +204,18 @@ export default {
             axios.request(options)
             .then(function (response){
                 console.log(response.data);
-                self.alertSucess();
-                self.criarTabela(); //gerando a tabela novamente
-                self.limpaInput(); //limpa os inputs
+                if(response.data.Status == 200){
+                    self.alertSucess();
+                    self.criarTabela(); //gerando a tabela novamente
+                    self.limpaInput(); //limpa os inputs
+                }
+                else{
+                    self.alertError()
+                }
             }).catch(function (error) {
                 console.log(error);  
             })
         },
-
-
 
         limpaInput(){
             this.descricao = "";    

@@ -67,12 +67,13 @@ export default {
         cadastrar_tipo_at(){
             const webApiUrl = "http://localhost/projetos/PHP/api/tipo_atividade/create.php" //link da api
             const self = this; //definindo self = this para usar dentro do axios
+            const token = localStorage.getItem("token");
 
             const options = { 
                 method: 'POST', // definição do método
                 url: webApiUrl, //link da api
                 headers: {
-                    "Access-Control-Allow-Origin" : "*", //headers de acesso
+                    Authorization : "Bearer " + token
                 },
                 data: {
                     descricao: this.descricao //passando para o data o valor do input 
