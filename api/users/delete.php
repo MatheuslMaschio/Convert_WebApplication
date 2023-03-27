@@ -7,6 +7,8 @@
     
     include_once '../../config/Database.php';
     include_once '../../models/usuario.php';
+    include_once '../../models/auth.php';
+
 
     //Instanciando Banco de dados e conexão 
     $database = new Database();
@@ -14,9 +16,10 @@
 
     //Instanciando objeto do usuario
     $usuario = new Usuario($db);
+    $auth = new Autenticacao($db);
 
 
-    if(isset($_SESSION["token"])){ //Se session TOKEN existir permite executar a consulta
+    if($auth->verificaToken()){
         //Enviando atividade para data 
         $data = json_decode(file_get_contents("php://input"));
 
@@ -39,13 +42,6 @@
                 )
             );
         }
-    }
-    else{
-        echo json_encode(
-            array(
-                'Token' => 'Inválido ou não existente!'
-            )
-        );
     }
 ?>  
 

@@ -1,44 +1,29 @@
 <?php 
-//Headers
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+    //Headers
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Headers: *');
+    header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/atividade.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/atividade.php';
+    include_once '../../models/auth.php';
 
-//Instaciando Banco de Dados & Conexão
-$database = new Database();
-$db = $database->connect();
 
-//Instanciando atividade object
-$atividade= new Atividade($db);
+    //Instaciando Banco de Dados & Conexão
+    $database = new Database();
+    $db = $database->connect();
 
-// atividade read consulta
-$result = $atividade->read();
+    //Instanciando atividade object
+    $atividade= new Atividade($db);
+    $auth = new Autenticacao($db);
 
-$var = getallheaders();
-    
-$header = $var["Authorization"];
-$header = explode(" ", $header);
-$header = $header[1];
+    if($auth->verificaToken()){
+        // atividade read consulta
+        $result = $atividade->read();
 
-if($header == null){
-    throw new Exception("Token inválido ou inexistente", 401);
-}
-
-else if (!empty($header)) {
-
-    $sql = "SELECT token FROM tokens where token = :t";
-
-    $stmt = $db->prepare($sql);
-
-    $stmt->bindParam(':t',$header);
-
-    if($stmt->execute()){
-        //Verficando o numero de linhas
+        //Verficando o numero de linha 
         $num = $result->rowCount();
-
+        
         //Verificar se há alguma atividade
         if($num > 0) {
             //atividade Array
@@ -61,15 +46,13 @@ else if (!empty($header)) {
             //Transformando em JSON
             echo json_encode($at_arr);
         }
-    } else {
-        //Se não há atividade
-        echo json_encode(array(
-            'Status' => '202',
-            'Mensagem' => 'Não existe nenhuma atividade.'
-            )
-        );
-        
+        else {
+            //Se não há atividade
+            echo json_encode(array(
+                'Status' => '202',
+                'Mensagem' => 'Não existe nenhuma atividade.'
+                )
+            );
+        }
     }
-}
-    
 ?>

@@ -8,43 +8,43 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/tipoAtividade.php';
+    include_once '../../models/auth.php';
+
 
     //Instaciando Banco de Dados & Conexão
     $database = new Database();
     $db = $database->connect();
 
-    // middleware para autenticação
+    
 
     //Instanciando atividade object
     $tipoAtividade = new tipoAtividade($db);
+    $auth = new Autenticacao($db);
 
-    //Obtém os dados enviados
-    $data = json_decode(file_get_contents("php://input"));
+    if($auth->verificaToken()){
+         //Obtém os dados enviados
+        $data = json_decode(file_get_contents("php://input"));
 
-    //definindo os valores 
-    $tipoAtividade->descricao = $data->descricao;
-    
-
-    //Criando Tipo de Atividade
-    if(
-        !empty($tipoAtividade->descricao) && 
-        $tipoAtividade->create()
-    ){
-        //resposta
-        echo json_encode(
-            array(
+        //definindo os valores 
+        $tipoAtividade->descricao = $data->descricao;
+        
+        //Criando Tipo de Atividade
+        if(!empty($tipoAtividade->descricao) && $tipoAtividade->create()){   
+            //resposta
+            echo json_encode(
+                array(
                 "Status" => "200",
                 'Mensagem' => 'Tipo de Atividade Criada com sucesso!'
-            )
-        );
+                )
+            );
+                
+        }else{
+            echo json_encode(
+                array(
+                    "Status" => "400",
+                    "Mensagem" => "Não foi possível criar Tipo de Atividade"
+                )
+            );
+        }
     }
-    else{
-        echo json_encode(
-            array(
-                "Status" => "400",
-                "Mensagem" => "Não foi possível criar Tipo de Atividade"
-            )
-        );
-    }
-    
 ?>

@@ -1,48 +1,32 @@
 <?php 
-//Headers
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+    //Headers
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Headers: *');
+    header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/tipoAtividade.php';
-
-
-//Instaciando Banco de Dados & Conexão
-$database = new Database();
-$db = $database->connect();
-
-//Instanciando tipoAtividade Object
-
-$tipoAtividade = new TipoAtividade($db);
-
-//resultados da leitura do tipoAtividade
-$result = $tipoAtividade->read();
-
-$var = getallheaders();
-
-$header = $var["Authorization"];
-$header = explode(" ", $header);
-$header = $header[1];
+    include_once '../../config/Database.php';
+    include_once '../../models/tipoAtividade.php';
+    include_once '../../models/auth.php';
 
 
 
-if($header == null){
-    throw new Exception("Token inválido ou inexistente", 401);
-}
+    //Instaciando Banco de Dados & Conexão
+    $database = new Database();
+    $db = $database->connect();
 
-else if(!empty($header)) {
-    $sql = "SELECT token FROM tokens where token = :t";
+    //Instanciando tipoAtividade Object
 
-    $stmt = $db->prepare($sql);
+    $tipoAtividade = new TipoAtividade($db);
+    $auth = new Autenticacao($db);
 
-    $stmt->bindParam(':t',$header);
+    if($auth->verificaToken()){
+        //resultados da leitura do tipoAtividade
+        $result = $tipoAtividade->read();
 
-    if($stmt->execute()){
         //Verficando o numero de linha 
         $num = $result->rowCount();
 
-            //Verificar se há algum tipo de atividade
+        //Verificar se há algum tipo de atividade
         if($num > 0) {
             //tipo de atividade Array
             $tpA_arr = array();
@@ -62,15 +46,14 @@ else if(!empty($header)) {
             //Transformando em JSON
             echo json_encode($tpA_arr);
         }
-    } else {
-        //Se não há categorias
-        echo json_encode(
-            array(
-                'Status' => '202',
-                'Mensagem' => 'Não existe nenhuma tipo de atividade.'
-            )
-        );
+        else {
+            //Se não há categorias
+            echo json_encode(
+                array(
+                    'Status' => '202',
+                    'Mensagem' => 'Não existe nenhuma tipo de atividade.'
+                )
+            );
+        }
     }
-}
-
 ?>

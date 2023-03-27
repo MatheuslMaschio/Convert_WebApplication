@@ -7,6 +7,8 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/usuario.php';
+    include_once '../../models/auth.php';
+
 
     //Instaciando Banco de Dados & Conexão
     $database = new Database();
@@ -14,23 +16,26 @@
 
     //Instanciando usuario object
     $usuario = new Usuario($db);
+    $auth = new Autenticacao($db);
 
-    //pegando o id 
-    $usuario->id = isset($_GET['id']) ? $_GET['id'] : die();
+    if($auth->verificaToken()){
+        //pegando o id 
+        $usuario->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    //executando método 
-    $usuario->read_single();
+        //executando método 
+        $usuario->read_single();
 
-    //Criando array
-    $user_arr = array();
-    $user_arr ['data'] = array();
-    
-    $user_arr = array(
-        'id' => $usuario->id,
-        'nome' => $usuario->nome,
-        'email' => $usuario->email,
-    );
+        //Criando array
+        $user_arr = array();
+        $user_arr ['data'] = array();
+        
+        $user_arr = array(
+            'id' => $usuario->id,
+            'nome' => $usuario->nome,
+            'email' => $usuario->email,
+        );
 
-    //JSON
-    print_r(json_encode($user_arr));
+        //JSON
+        print_r(json_encode($user_arr));
+    }
 ?>
